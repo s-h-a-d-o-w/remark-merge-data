@@ -1,0 +1,5 @@
+```some-language
+{
+  "foo": "baz"
+}
+```

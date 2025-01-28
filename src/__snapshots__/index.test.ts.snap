@@ -1,0 +1,51 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`remarkMergeData > merges JSON deeply correctly 1`] = `
+"\`\`\`json
+{
+  "globalRootProp": true,
+  "nested": {
+    "globalProperty": "global",
+    "globalArray": [
+      0
+    ],
+    "overwrittenArray": [
+      0,
+      1,
+      2
+    ],
+    "localProperty": 123
+  },
+  "localRootProp": "bar"
+}
+\`\`\`
+"
+`;
+
+exports[`remarkMergeData > merges YAML deeply correctly 1`] = `
+"\`\`\`yaml
+globalRootProp: true
+nested:
+  globalProperty: global
+  globalArray:
+    - 0
+  overwrittenArray:
+    - 0
+    - 1
+    - 2
+  localProperty: 123
+localRootProp: bar
+
+\`\`\`
+"
+`;
+
+exports[`remarkMergeData > merges the readme example correctly 1`] = `
+"\`\`\`some-language
+{
+  "foo": "baz",
+  "unchanged": 123
+}
+\`\`\`
+"
+`;
