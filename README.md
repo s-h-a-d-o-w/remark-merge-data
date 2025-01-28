@@ -1,6 +1,6 @@
 # remark-merge-data
 
-A [remark](https://remark.js.org) plugin that makes it possible to share global configuration for code blocks in markdown that contain either JSON or YAML data, such as [kroki](https://github.com/show-docs/remark-kroki).
+A [remark](https://remark.js.org) plugin that makes it possible to share global configuration for code blocks in markdown that contain either JSON or YAML data, like when e.g. using [kroki](https://github.com/show-docs/remark-kroki).
 
 # Usage
 

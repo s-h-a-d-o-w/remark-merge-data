@@ -1,13 +1,19 @@
 {
   "name": "node-ts-boilerplate",
   "version": "1.0.0",
-  "main": "./src/index.ts",
-  "type": "module",
   "license": "MIT",
+  "author": "Andreas Opferkuch <andreas.opferkuch@gmail.com>",
+  "repository": "s-h-a-d-o-w/remark-merge-data",
+  "exports": "./dist/index.js",
+  "main": "./dist/index.js",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "lint": "eslint .",
-    "start": "tsx .",
     "test": "vitest",
+    "prepack": "rimraf dist && tsc -p tsconfig.prod.json",
     "prepare": "husky"
   },
   "dependencies": {
@@ -31,10 +37,17 @@
     "lint-staged": "^15.4.3",
     "prettier": "^3.4.2",
     "remark": "^15.0.1",
+    "rimraf": "^6.0.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.22.0",
     "unified": "^11.0.5",
     "vitest": "^3.0.4"
-  }
+  },
+  "keywords": [
+    "remark",
+    "remark-plugin",
+    "plugin",
+    "unified"
+  ]
 }

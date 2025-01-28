@@ -4,19 +4,19 @@ import { isMatch, merge as lodashMerge } from "lodash";
 import type { Root } from "mdast";
 import yaml from "yaml";
 
-export type MergeDataOptions<T = unknown> = {
+export type MergeDataOptions = {
   /**
    * The data that will be merged with the data in the selected code blocks.
    * This is the "base" data. The data in every code block can overwrite the global data specified here.
    */
-  data: T | string;
+  data: unknown | string;
   /** The language of the code blocks that should be processed. For more specific filtering, use `meta` in addition. */
   lang: string;
 
   /** If you use YAML, `data` has to be a string that contains valid YAML. */
   isYaml?: boolean;
   /** By default, lodash's merge is used. */
-  merge?: (target: T, source: unknown) => unknown;
+  merge?: (target: unknown, source: unknown) => unknown;
   /**
    * This can be used to filter by arbitrary metadata key-value pairs.
    * Looks e.g. like this in markdown: ```kroki type=vegalite orientation=horizontal
