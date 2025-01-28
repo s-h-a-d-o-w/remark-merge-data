@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "NodeNext",
-    "declaration": true,
+    "moduleResolution": "NodeNext",
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -21,7 +21,9 @@
     "noPropertyAccessFromIndexSignature": true,
     "allowUnreachableCode": true,
     "useUnknownInCatchVariables": false,
-
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true,
     "outDir": "dist",
     "types": [
       "vitest/globals"
