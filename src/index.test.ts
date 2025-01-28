@@ -90,7 +90,7 @@ nested:
         .use(remarkMergeData, options)
         .process(await readFile(join(import.meta.dirname, "fixtures/yaml.md"))),
     ).rejects.toMatchInlineSnapshot(
-      `[Error: If you use YAML, you have to provide YAML code as a string.]`,
+      `[Error: If you use YAML, \`data\` has to be a string.]`,
     );
   });
 });

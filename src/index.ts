@@ -42,9 +42,7 @@ export const remarkMergeData: Plugin<[MergeDataOptions], Root> = ({
   stringify,
 }) => {
   if (isYaml && typeof data !== "string") {
-    throw new Error(
-      "If you use YAML, you have to provide YAML code as a string.",
-    );
+    throw new Error("If you use YAML, `data` has to be a string.");
   }
 
   const mergeFunction = merge || lodashMerge;
