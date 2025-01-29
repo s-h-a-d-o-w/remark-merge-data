@@ -1,8 +1,11 @@
+[![github actions](https://github.com/s-h-a-d-o-w/remark-merge-data/actions/workflows/ci.yaml/badge.svg)](https://github.com/s-h-a-d-o-w/remark-merge-data/actions/workflows/ci.yaml)
+[![npm version](https://img.shields.io/npm/v/remark-merge-data)](https://www.npmjs.com/package/remark-merge-data)
+
 # remark-merge-data
 
 A [remark](https://remark.js.org) plugin that makes it possible to share global configuration for code blocks in markdown that contain either JSON or YAML data (or any other format if you provide your own `parse` and `stringify`), like when e.g. using [kroki](https://github.com/show-docs/remark-kroki).
 
-# Usage
+## Usage
 
 ```typescript
 import readFileSync from 'node:fs';
@@ -24,7 +27,7 @@ remark()
   .catch((error) => console.error(error));
 ```
 
-# API
+## API
 
 ```typescript
 export type MergeDataOptions = {
@@ -52,4 +55,7 @@ export type MergeDataOptions = {
 };
 ```
 
+## Thanks
 
+- [@jordemort](https://github.com/jordemort) - for illustrating [how easy customizing things in blogs with remark can be](https://jordemort.dev/blog/remark-all-the-things/).
+- [@remcohaszing](https://github.com/remcohaszing) - for inspiring me to publish this plugin and how to structure it. (See his [mermaid plugin](https://github.com/remcohaszing/remark-mermaidjs/tree/main))
