@@ -1,5 +1,10 @@
 ```some-language
 {
-  "foo": "baz"
+  "localProp": true
+}
+```
+```some-other-language
+{
+  "localProp": true
 }
 ```

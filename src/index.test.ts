@@ -5,13 +5,20 @@ import { MergeDataOptions, remarkMergeData } from "./index.js";
 
 describe(remarkMergeData.name, () => {
   it("merges the readme example correctly", async () => {
-    const options: MergeDataOptions = {
-      lang: "some-language",
-      data: {
-        foo: "bar",
-        unchanged: 123,
+    const options: MergeDataOptions[] = [
+      {
+        lang: "some-language",
+        data: {
+          foo: "bar",
+        },
       },
-    };
+      {
+        lang: "some-other-language",
+        data: {
+          foo: "baz",
+        },
+      },
+    ];
 
     expect(
       (
@@ -27,17 +34,19 @@ describe(remarkMergeData.name, () => {
   });
 
   it("merges JSON deeply correctly", async () => {
-    const options: MergeDataOptions = {
-      lang: "json",
-      data: {
-        globalRootProp: true,
-        nested: {
-          globalProperty: "global",
-          globalArray: [0],
-          overwrittenArray: [3, 4, 5],
+    const options: MergeDataOptions[] = [
+      {
+        lang: "json",
+        data: {
+          globalRootProp: true,
+          nested: {
+            globalProperty: "global",
+            globalArray: [0],
+            overwrittenArray: [3, 4, 5],
+          },
         },
       },
-    };
+    ];
 
     expect(
       (
@@ -51,10 +60,11 @@ describe(remarkMergeData.name, () => {
   });
 
   it("merges YAML deeply correctly", async () => {
-    const options: MergeDataOptions = {
-      isYaml: true,
-      lang: "yaml",
-      data: `
+    const options: MergeDataOptions[] = [
+      {
+        isYaml: true,
+        lang: "yaml",
+        data: `
 globalRootProp: true
 nested:
   globalProperty: global
@@ -65,7 +75,8 @@ nested:
     - 4
     - 5
 `,
-    };
+      },
+    ];
 
     expect(
       (
@@ -79,11 +90,13 @@ nested:
   });
 
   it("throws if yaml is supposed to be used but data isn't a string", async () => {
-    const options: MergeDataOptions = {
-      isYaml: true,
-      lang: "yaml",
-      data: {},
-    };
+    const options: MergeDataOptions[] = [
+      {
+        isYaml: true,
+        lang: "yaml",
+        data: {},
+      },
+    ];
 
     await expect(async () =>
       remark()
@@ -95,10 +108,12 @@ nested:
   });
 
   it("global data doesn't get polluted by merges", async () => {
-    const options: MergeDataOptions = {
-      lang: "json",
-      data: {},
-    };
+    const options: MergeDataOptions[] = [
+      {
+        lang: "json",
+        data: {},
+      },
+    ];
 
     await remark()
       .use(remarkMergeData, options)
@@ -118,16 +133,18 @@ nested:
   });
 
   it("looks for an exact match of the meta data", async () => {
-    const options: MergeDataOptions = {
-      lang: "json",
-      data: {
-        sharedProp: true,
+    const options: MergeDataOptions[] = [
+      {
+        lang: "json",
+        data: {
+          sharedProp: true,
+        },
+        meta: {
+          foo: "bar",
+          type: "match",
+        },
       },
-      meta: {
-        foo: "bar",
-        type: "match",
-      },
-    };
+    ];
 
     const noMatchContent = await readFile(
       join(import.meta.dirname, "fixtures/meta-nomatch.md"),

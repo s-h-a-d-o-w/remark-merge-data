@@ -33,31 +33,28 @@ const jsonStringify = (dataToStringify: unknown) => {
   return JSON.stringify(dataToStringify, null, 2);
 };
 
-export const remarkMergeData: Plugin<[MergeDataOptions], Root> = ({
-  data,
-  lang,
-  isYaml,
-  merge,
-  meta,
-  parse,
-  stringify,
-}) => {
-  if (isYaml && typeof data !== "string") {
-    throw new Error("If you use YAML, `data` has to be a string.");
-  }
+export const remarkMergeData: Plugin<[MergeDataOptions[]], Root> = (
+  optionsArray,
+) => {
+  optionsArray.forEach((options) => {
+    const { data, isYaml } = options;
+    if (isYaml && typeof data !== "string") {
+      throw new Error("If you use YAML, `data` has to be a string.");
+    }
+  });
 
-  const mergeFunction = merge || lodashMerge;
-  // Wrapping yaml.parse is necessary to force the correct type overload
-  const parseFunction =
-    parse || isYaml ? (code: string) => yaml.parse(code) : JSON.parse;
-  const stringifyFunction =
-    stringify || isYaml ? yaml.stringify : jsonStringify;
   return (tree) => {
     visit(tree, "code", function (node) {
-      if (node.lang && node.lang === lang) {
+      for (const options of optionsArray) {
+        const { data, lang, isYaml, merge, meta, parse, stringify } = options;
+
+        if (node.lang !== lang) {
+          continue;
+        }
+
         if (meta) {
           if (!node.meta) {
-            return;
+            continue;
           }
           const nodeMeta = Object.fromEntries(
             node.meta.split(" ").map((entry) => {
@@ -65,10 +62,15 @@ export const remarkMergeData: Plugin<[MergeDataOptions], Root> = ({
             }) as [string, string][],
           );
           if (!isEqual(nodeMeta, meta)) {
-            // No metadata match found.
-            return;
+            continue;
           }
         }
+
+        const mergeFunction = merge || lodashMerge;
+        const parseFunction =
+          parse || isYaml ? (code: string) => yaml.parse(code) : JSON.parse;
+        const stringifyFunction =
+          stringify || isYaml ? yaml.stringify : jsonStringify;
 
         const documentData = parseFunction(node.value) as unknown;
         node.value = stringifyFunction(

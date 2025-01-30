@@ -12,13 +12,17 @@ import readFileSync from 'node:fs';
 import { remark } from 'remark';
 import { MergeDataOptions, remarkMergeData } from "remark-merge-data";
 
-const mergeDataOptions: MergeDataOptions = {
+const mergeDataOptions: MergeDataOptions[] = [{
   lang: "some-language",
   data: {
     foo: "bar",
-    unchanged: 123
   },
-};
+}, {
+  lang: "some-other-language",
+  data: {
+    foo: "baz",
+  },
+}];
 
 remark()
   .use(remarkMergeData, mergeDataOptions)
