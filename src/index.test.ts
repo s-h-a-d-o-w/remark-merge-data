@@ -116,4 +116,36 @@ nested:
       ).value,
     ).toMatchSnapshot();
   });
+
+  it("looks for an exact match of the meta data", async () => {
+    const options: MergeDataOptions = {
+      lang: "json",
+      data: {
+        sharedProp: true,
+      },
+      meta: {
+        foo: "bar",
+        type: "match",
+      },
+    };
+
+    const noMatchContent = await readFile(
+      join(import.meta.dirname, "fixtures/meta-nomatch.md"),
+      "utf-8",
+    );
+    expect(
+      (await remark().use(remarkMergeData, options).process(noMatchContent))
+        .value,
+    ).toEqual(noMatchContent);
+
+    expect(
+      (
+        await remark()
+          .use(remarkMergeData, options)
+          .process(
+            await readFile(join(import.meta.dirname, "fixtures/meta-match.md")),
+          )
+      ).value,
+    ).toMatchSnapshot();
+  });
 });

@@ -9,6 +9,15 @@ exports[`remarkMergeData > global data doesn't get polluted by merges 1`] = `
 "
 `;
 
+exports[`remarkMergeData > looks for an exact match of the meta data 1`] = `
+"\`\`\`json type=match foo=bar
+{
+  "sharedProp": true
+}
+\`\`\`
+"
+`;
+
 exports[`remarkMergeData > merges JSON deeply correctly 1`] = `
 "\`\`\`json
 {

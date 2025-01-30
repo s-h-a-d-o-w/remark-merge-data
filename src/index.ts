@@ -1,6 +1,6 @@
 import { visit } from "unist-util-visit";
 import type { Plugin } from "unified";
-import { isMatch, merge as lodashMerge } from "lodash-es";
+import { isEqual, merge as lodashMerge } from "lodash-es";
 import type { Root } from "mdast";
 import yaml from "yaml";
 
@@ -20,6 +20,7 @@ export type MergeDataOptions = {
   /**
    * This can be used to filter by arbitrary metadata key-value pairs.
    * Looks e.g. like this in markdown: ```kroki type=vegalite orientation=horizontal
+   * Note: The whole metadata object has to match!
    */
   meta?: Record<string, string>;
   /** By default, `JSON.parse` is used. (`yaml.parse` if YAML is used.) */
@@ -63,7 +64,7 @@ export const remarkMergeData: Plugin<[MergeDataOptions], Root> = ({
               return entry.split("=");
             }) as [string, string][],
           );
-          if (!isMatch(nodeMeta, meta)) {
+          if (!isEqual(nodeMeta, meta)) {
             // No metadata match found.
             return;
           }
