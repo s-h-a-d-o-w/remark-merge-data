@@ -1,5 +1,14 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`remarkMergeData > global data doesn't get polluted by merges 1`] = `
+"\`\`\`json
+{
+  "pollution1": true
+}
+\`\`\`
+"
+`;
+
 exports[`remarkMergeData > merges JSON deeply correctly 1`] = `
 "\`\`\`json
 {

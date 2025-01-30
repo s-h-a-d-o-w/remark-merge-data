@@ -72,6 +72,7 @@ export const remarkMergeData: Plugin<[MergeDataOptions], Root> = ({
         const documentData = parseFunction(node.value) as unknown;
         node.value = stringifyFunction(
           mergeFunction(
+            {},
             isYaml ? parseFunction(data as string) : data,
             documentData,
           ),

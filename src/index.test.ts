@@ -93,4 +93,27 @@ nested:
       `[Error: If you use YAML, \`data\` has to be a string.]`,
     );
   });
+
+  it("global data doesn't get polluted by merges", async () => {
+    const options: MergeDataOptions = {
+      lang: "json",
+      data: {},
+    };
+
+    await remark()
+      .use(remarkMergeData, options)
+      .process(
+        await readFile(join(import.meta.dirname, "fixtures/pollution0.md")),
+      );
+
+    expect(
+      (
+        await remark()
+          .use(remarkMergeData, options)
+          .process(
+            await readFile(join(import.meta.dirname, "fixtures/pollution1.md")),
+          )
+      ).value,
+    ).toMatchSnapshot();
+  });
 });
