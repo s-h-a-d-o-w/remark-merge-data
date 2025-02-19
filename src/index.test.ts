@@ -133,18 +133,16 @@ nested:
   });
 
   it("looks for an exact match of the meta data", async () => {
-    const options: MergeDataOptions[] = [
-      {
-        lang: "json",
-        data: {
-          sharedProp: true,
-        },
-        meta: {
-          foo: "bar",
-          type: "match",
-        },
+    const options: MergeDataOptions = {
+      lang: "json",
+      data: {
+        sharedProp: true,
       },
-    ];
+      meta: {
+        foo: "bar",
+        type: "match",
+      },
+    };
 
     const noMatchContent = await readFile(
       join(import.meta.dirname, "fixtures/meta-nomatch.md"),

@@ -33,9 +33,13 @@ const jsonStringify = (dataToStringify: unknown) => {
   return JSON.stringify(dataToStringify, null, 2);
 };
 
-export const remarkMergeData: Plugin<[MergeDataOptions[]], Root> = (
-  optionsArray,
-) => {
+export const remarkMergeData: Plugin<
+  [MergeDataOptions | MergeDataOptions[]],
+  Root
+> = (mergeDataOptions) => {
+  const optionsArray = Array.isArray(mergeDataOptions)
+    ? mergeDataOptions
+    : [mergeDataOptions];
   optionsArray.forEach((options) => {
     const { data, isYaml } = options;
     if (isYaml && typeof data !== "string") {
