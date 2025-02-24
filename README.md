@@ -5,7 +5,22 @@
 
 A [remark](https://remark.js.org) plugin that makes it possible to share global configuration for code blocks in markdown that contain either JSON or YAML data (or any other format if you provide your own `parse` and `stringify`), like when e.g. using [kroki](https://github.com/show-docs/remark-kroki).
 
-## Usage
+## Generic example
+
+Assuming `example.md` contains the following:
+
+````markdown
+```some-language
+{
+  "localProp": true
+}
+```
+```some-other-language
+{
+  "localProp": true
+}
+```
+````
 
 ```typescript
 import readFileSync from 'node:fs';
@@ -30,6 +45,27 @@ remark()
   .then(({value}) => console.log(value))
   .catch((error) => console.error(error));
 ```
+
+Will log:
+
+````markdown
+```some-language
+{
+  "foo": "bar",
+  "localProp": true
+}
+```
+```some-other-language
+{
+  "foo": "baz",
+  "localProp": true
+}
+```
+````
+
+## Practical example
+
+See [this article](https://aop.software/blog/2025-02-17_graphs-in-blogs/#shared-graph-config) for an example where graphs are defined in code blocks. To avoid large amounts of duplicate definitions, everything that can be shared is merged with the data in those code blocks using this plugin.
 
 ## API
 
