@@ -4,23 +4,7 @@ import { isEqual, merge as lodashMerge } from "lodash-es";
 import type { Root } from "mdast";
 import yaml from "yaml";
 
-export type MergeDataOptions = {
-  /** The language of the code blocks that should be processed. For more specific filtering, use `meta` in addition. */
-  lang: string;
-
-  /** By default, lodash's merge is used. */
-  merge?: (target: unknown, source: unknown) => unknown;
-  /**
-   * This can be used to filter by arbitrary metadata key-value pairs.
-   * Looks e.g. like this in markdown: ```kroki type=vegalite orientation=horizontal
-   * Note: The whole metadata object has to match!
-   */
-  meta?: Record<string, string>;
-  /** By default, `JSON.parse` is used. (`yaml.parse` if YAML is used.) */
-  parse?: (data: string) => unknown;
-  /** By default, `JSON.stringify` is used. (`yaml.stringify` if YAML is used.) */
-  stringify?: (data: unknown) => string;
-} & (
+export type MergeDataOptions = (
   | {
       /**
        * The data that will be merged with the data in the selected code blocks.
@@ -39,7 +23,23 @@ export type MergeDataOptions = {
 
       isYaml?: true;
     }
-);
+) & {
+  /** The language of the code blocks that should be processed. For more specific filtering, use `meta` in addition. */
+  lang: string;
+
+  /** By default, lodash's merge is used. */
+  merge?: (target: unknown, source: unknown) => unknown;
+  /**
+   * This can be used to filter by arbitrary metadata key-value pairs.
+   * Looks e.g. like this in markdown: ```kroki type=vegalite orientation=horizontal
+   * Note: The whole metadata object has to match!
+   */
+  meta?: Record<string, string>;
+  /** By default, `JSON.parse` is used. (`yaml.parse` if YAML is used.) */
+  parse?: (data: string) => unknown;
+  /** By default, `JSON.stringify` is used. (`yaml.stringify` if YAML is used.) */
+  stringify?: (data: unknown) => string;
+};
 
 const jsonStringify = (dataToStringify: unknown) => {
   return JSON.stringify(dataToStringify, null, 2);

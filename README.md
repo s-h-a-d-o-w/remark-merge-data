@@ -70,22 +70,31 @@ See [this article](https://aop.software/blog/2025-02-17_graphs-in-blogs/#shared-
 ## API
 
 ```typescript
-export type MergeDataOptions = {
-  /**
-   * The data that will be merged with the data in the selected code blocks.
-   * This is the "base" data. The data in every code block can overwrite the global data specified here.
-   */
-  data: unknown;
+export type MergeDataOptions = (
+  | {
+      /**
+       * The data that will be merged with the data in the selected code blocks.
+       * This is the "base" data. The data in every code block can overwrite the global data specified here.
+       */
+      data: unknown;
+
+      isYaml?: false;
+    }
+  | {
+      data: string;
+
+      isYaml?: true;
+    }
+) & {
   /** The language of the code blocks that should be processed. For more specific filtering, use `meta` in addition. */
   lang: string;
 
-  /** If you use YAML, `data` has to be a string that contains valid YAML. */
-  isYaml?: boolean;
-  /** By default, lodash's merge is used.  */
+  /** By default, lodash's merge is used. */
   merge?: (target: unknown, source: unknown) => unknown;
   /**
    * This can be used to filter by arbitrary metadata key-value pairs.
    * Looks e.g. like this in markdown: ```kroki type=vegalite orientation=horizontal
+   * Note: The whole metadata object has to match!
    */
   meta?: Record<string, string>;
   /** By default, `JSON.parse` is used. (`yaml.parse` if YAML is used.) */
