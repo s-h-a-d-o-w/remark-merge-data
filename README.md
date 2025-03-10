@@ -12,12 +12,17 @@ Assuming `example.md` contains the following:
 ````markdown
 ```some-language
 {
-  "localProp": true
+  "localProp": 0
+}
+```
+```some-language
+{
+  "localProp": 1
 }
 ```
 ```some-other-language
 {
-  "localProp": true
+  "localProp": 2
 }
 ```
 ````
@@ -30,12 +35,12 @@ import { MergeDataOptions, remarkMergeData } from "remark-merge-data";
 const mergeDataOptions: MergeDataOptions[] = [{
   lang: "some-language",
   data: {
-    foo: "bar",
+    globalProp: 3,
   },
 }, {
   lang: "some-other-language",
   data: {
-    foo: "baz",
+    globalProp: 4,
   },
 }];
 
@@ -51,14 +56,20 @@ Will log:
 ````markdown
 ```some-language
 {
-  "foo": "bar",
-  "localProp": true
+  "globalProp": 3,
+  "localProp": 0
+}
+```
+```some-language
+{
+  "globalProp": 3,
+  "localProp": 1
 }
 ```
 ```some-other-language
 {
-  "foo": "baz",
-  "localProp": true
+  "globalProp": 4,
+  "localProp": 2
 }
 ```
 ````

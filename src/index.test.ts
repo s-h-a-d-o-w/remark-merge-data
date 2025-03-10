@@ -9,13 +9,13 @@ describe(remarkMergeData.name, () => {
       {
         lang: "some-language",
         data: {
-          foo: "bar",
+          globalProp: 3,
         },
       },
       {
         lang: "some-other-language",
         data: {
-          foo: "baz",
+          globalProp: 4,
         },
       },
     ];

@@ -61,15 +61,22 @@ localRootProp: bar
 exports[`remarkMergeData > merges the readme example correctly 1`] = `
 "\`\`\`some-language
 {
-  "foo": "bar",
-  "localProp": true
+  "globalProp": 3,
+  "localProp": 0
+}
+\`\`\`
+
+\`\`\`some-language
+{
+  "globalProp": 3,
+  "localProp": 1
 }
 \`\`\`
 
 \`\`\`some-other-language
 {
-  "foo": "baz",
-  "localProp": true
+  "globalProp": 4,
+  "localProp": 2
 }
 \`\`\`
 "
