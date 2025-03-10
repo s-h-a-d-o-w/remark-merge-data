@@ -5,16 +5,9 @@ import type { Root } from "mdast";
 import yaml from "yaml";
 
 export type MergeDataOptions = {
-  /**
-   * The data that will be merged with the data in the selected code blocks.
-   * This is the "base" data. The data in every code block can overwrite the global data specified here.
-   */
-  data: unknown | string;
   /** The language of the code blocks that should be processed. For more specific filtering, use `meta` in addition. */
   lang: string;
 
-  /** If you use YAML, `data` has to be a string that contains valid YAML. */
-  isYaml?: boolean;
   /** By default, lodash's merge is used. */
   merge?: (target: unknown, source: unknown) => unknown;
   /**
@@ -27,7 +20,26 @@ export type MergeDataOptions = {
   parse?: (data: string) => unknown;
   /** By default, `JSON.stringify` is used. (`yaml.stringify` if YAML is used.) */
   stringify?: (data: unknown) => string;
-};
+} & (
+  | {
+      /**
+       * The data that will be merged with the data in the selected code blocks.
+       * This is the "base" data. The data in every code block can overwrite the global data specified here.
+       */
+      data: unknown;
+
+      isYaml?: false;
+    }
+  | {
+      /**
+       * The data that will be merged with the data in the selected code blocks.
+       * This is the "base" data. The data in every code block can overwrite the global data specified here.
+       */
+      data: string;
+
+      isYaml?: true;
+    }
+);
 
 const jsonStringify = (dataToStringify: unknown) => {
   return JSON.stringify(dataToStringify, null, 2);
@@ -40,12 +52,6 @@ export const remarkMergeData: Plugin<
   const optionsArray = Array.isArray(mergeDataOptions)
     ? mergeDataOptions
     : [mergeDataOptions];
-  optionsArray.forEach((options) => {
-    const { data, isYaml } = options;
-    if (isYaml && typeof data !== "string") {
-      throw new Error("If you use YAML, `data` has to be a string.");
-    }
-  });
 
   return (tree) => {
     visit(tree, "code", function (node) {
@@ -78,11 +84,7 @@ export const remarkMergeData: Plugin<
 
         const documentData = parseFunction(node.value) as unknown;
         node.value = stringifyFunction(
-          mergeFunction(
-            {},
-            isYaml ? parseFunction(data as string) : data,
-            documentData,
-          ),
+          mergeFunction({}, isYaml ? parseFunction(data) : data, documentData),
         );
       }
     });

@@ -89,24 +89,6 @@ nested:
     ).toMatchSnapshot();
   });
 
-  it("throws if yaml is supposed to be used but data isn't a string", async () => {
-    const options: MergeDataOptions[] = [
-      {
-        isYaml: true,
-        lang: "yaml",
-        data: {},
-      },
-    ];
-
-    await expect(async () =>
-      remark()
-        .use(remarkMergeData, options)
-        .process(await readFile(join(import.meta.dirname, "fixtures/yaml.md"))),
-    ).rejects.toMatchInlineSnapshot(
-      `[Error: If you use YAML, \`data\` has to be a string.]`,
-    );
-  });
-
   it("global data doesn't get polluted by merges", async () => {
     const options: MergeDataOptions[] = [
       {
